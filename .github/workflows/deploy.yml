@@ -26,12 +26,9 @@ jobs:
       - name: SSH into Public server and redeploy frontend
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: ${{ secrets.PRIVATE_HOST }}          # 👈 [변경] PUBLIC_HOST를 PRIVATE_HOST로 수정
+          host: ${{ secrets.PUBLIC_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
-          proxy_host: ${{ secrets.PUBLIC_HOST }}     # 👈 [추가] 백엔드와 동일한 징검다리 설정 추가
-          proxy_username: ${{ secrets.SSH_USER }}    # 👈 [추가] 백엔드와 동일한 징검다리 설정 추가
-          proxy_key: ${{ secrets.SSH_KEY }}          # 👈 [추가] 백엔드와 동일한 징검다리 설정 추가
           script: |
             cd ~/gitactions
             git pull
