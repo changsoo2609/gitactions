@@ -24,3 +24,18 @@ jobs:
 
           echo "TCP port 22 is not reachable from this GitHub-hosted runner."
           exit 1
+
+  check-private-ssh-via-bastion:
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Verify SSH transport without deployment
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.PRIVATE_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          proxy_host: ${{ secrets.PUBLIC_HOST }}
+          proxy_username: ${{ secrets.SSH_USER }}
+          proxy_key: ${{ secrets.SSH_KEY }}
+          script: 'true'
